@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow — Life Dashboard</title>
+
+  <!-- Google Fonts: DM Serif Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- ===================== TOP BAR ===================== -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">Flow</span>
+    </div>
+    <div class="topbar-controls">
+      <!-- Custom name button -->
+      <button class="btn-ghost" id="btn-set-name" title="Set your name">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="display-username">Set name</span>
+      </button>
+      <!-- Theme toggle -->
+      <button class="btn-icon" id="btn-theme" title="Toggle theme" aria-label="Toggle dark mode">
+        <span class="icon-sun">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </span>
+        <span class="icon-moon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN LAYOUT ===================== -->
+  <main class="dashboard">
+
+    <!-- LEFT COLUMN -->
+    <aside class="col-left">
+
+      <!-- ---- GREETING + CLOCK CARD ---- -->
+      <section class="card card-hero" aria-label="Time and greeting">
+        <p class="greeting" id="greeting">Good morning</p>
+        <h1 class="clock" id="clock">00:00:00</h1>
+        <p class="date" id="date">Loading…</p>
+        <div class="weather-pill" id="day-progress-wrap">
+          <span class="pill-label">Day progress</span>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="day-progress"></div>
+          </div>
+          <span class="pill-percent" id="day-percent">0%</span>
+        </div>
+      </section>
+
+      <!-- ---- POMODORO CARD ---- -->
+      <section class="card card-timer" aria-label="Focus timer">
+        <div class="card-header">
+          <h2 class="card-title">Focus Timer</h2>
+          <!-- Adjustable duration -->
+          <div class="timer-config">
+            <label for="timer-minutes" class="sr-only">Duration (minutes)</label>
+            <input type="number" id="timer-minutes" class="timer-input" min="1" max="120" value="25" title="Set minutes" />
+            <span class="timer-input-unit">min</span>
+          </div>
+        </div>
+
+        <!-- Ring display -->
+        <div class="timer-ring-wrap" role="timer" aria-live="polite">
+          <svg class="timer-ring" viewBox="0 0 160 160" aria-hidden="true">
+            <circle class="ring-bg" cx="80" cy="80" r="68" />
+            <circle class="ring-progress" id="ring-progress" cx="80" cy="80" r="68" />
+          </svg>
+          <div class="timer-display">
+            <span class="timer-time" id="timer-display">25:00</span>
+            <span class="timer-label" id="timer-status-label">Ready</span>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="timer-controls">
+          <button class="btn-timer btn-start" id="btn-start-timer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            Start
+          </button>
+          <button class="btn-timer btn-stop" id="btn-stop-timer" disabled>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            Pause
+          </button>
+          <button class="btn-timer btn-reset" id="btn-reset-timer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Reset
+          </button>
+        </div>
+
+        <!-- Sessions counter -->
+        <p class="sessions-count">Sessions today: <strong id="session-count">0</strong></p>
+      </section>
+
+    </aside>
+
+    <!-- RIGHT COLUMN -->
+    <section class="col-right">
+
+      <!-- ---- TASKS CARD ---- -->
+      <div class="card card-tasks" aria-label="To-do list">
+        <div class="card-header">
+          <h2 class="card-title">Tasks</h2>
+          <div class="task-header-right">
+            <!-- Sort -->
+            <select class="select-sort" id="task-sort" title="Sort tasks" aria-label="Sort tasks">
+              <option value="default">Default</option>
+              <option value="az">A → Z</option>
+              <option value="za">Z → A</option>
+              <option value="done-last">Done last</option>
+              <option value="done-first">Done first</option>
+            </select>
+            <!-- Stats badge -->
+            <span class="tasks-badge" id="tasks-badge">0 / 0</span>
+          </div>
+        </div>
+
+        <!-- Add task input -->
+        <form class="task-form" id="task-form" autocomplete="off" novalidate>
+          <input
+            type="text"
+            id="task-input"
+            class="task-input"
+            placeholder="Add a new task…"
+            maxlength="120"
+            aria-label="New task"
+          />
+          <button type="submit" class="btn-add" aria-label="Add task">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </form>
+
+        <!-- Duplicate warning -->
+        <p class="task-warn" id="task-warn" aria-live="polite"></p>
+
+        <!-- Task list -->
+        <ul class="task-list" id="task-list" aria-label="Task items" role="list"></ul>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="tasks-empty">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".35"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <p>Nothing here yet.<br/>Add your first task above.</p>
+        </div>
+      </div>
+
+      <!-- ---- QUICK LINKS CARD ---- -->
+      <div class="card card-links" aria-label="Quick links">
+        <div class="card-header">
+          <h2 class="card-title">Quick Links</h2>
+        </div>
+
+        <!-- Add link form -->
+        <form class="link-form" id="link-form" autocomplete="off" novalidate>
+          <input
+            type="text"
+            id="link-label"
+            class="link-input"
+            placeholder="Label (e.g. GitHub)"
+            maxlength="30"
+            aria-label="Link label"
+          />
+          <input
+            type="url"
+            id="link-url"
+            class="link-input link-url"
+            placeholder="URL (https://…)"
+            aria-label="Link URL"
+          />
+          <button type="submit" class="btn-add" aria-label="Add link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </form>
+
+        <p class="task-warn" id="link-warn" aria-live="polite"></p>
+
+        <!-- Link grid -->
+        <div class="links-grid" id="links-grid"></div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="links-empty">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".35"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <p>No links saved yet.<br/>Add your favorite sites above.</p>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ===================== MODALS ===================== -->
+
+  <!-- Name modal -->
+  <div class="modal-overlay" id="name-modal" role="dialog" aria-modal="true" aria-labelledby="name-modal-title">
+    <div class="modal">
+      <h3 class="modal-title" id="name-modal-title">What's your name?</h3>
+      <p class="modal-sub">Your greeting will be personalised.</p>
+      <input type="text" id="name-modal-input" class="modal-input" placeholder="Enter your name…" maxlength="30" />
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" id="btn-name-cancel">Cancel</button>
+        <button class="btn-modal-ok" id="btn-name-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit task modal -->
+  <div class="modal-overlay" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+    <div class="modal">
+      <h3 class="modal-title" id="edit-modal-title">Edit Task</h3>
+      <input type="text" id="edit-modal-input" class="modal-input" maxlength="120" />
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" id="btn-edit-cancel">Cancel</button>
+        <button class="btn-modal-ok" id="btn-edit-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>
