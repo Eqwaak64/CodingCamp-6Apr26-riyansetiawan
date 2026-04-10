@@ -1,0 +1,18 @@
+{
+  "projectName": "To-Do List Life Dashboard",
+  "builder": {
+    "name": "Riyan Setiawan",
+    "builderId": "d-9067c98495.a4e84468-8061-700e-c776-c39d93d5eec2"
+  },
+  "createdAt": "2026-04-06",
+  "tools": {
+    "ide": "Kiro",
+    "language": ["HTML", "CSS", "JavaScript"]
+  },
+  "features": [
+    "Real-time clock and greeting",
+    "Focus timer (Pomodoro)",
+    "To-do list with Local Storage",
+    "Quick links with Local Storage"
+  ]
+}

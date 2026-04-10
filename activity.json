@@ -1,0 +1,24 @@
+{
+  "activities": [
+    {
+      "day": 1,
+      "task": "Project setup and layout design"
+    },
+    {
+      "day": 2,
+      "task": "Implemented clock and greeting feature"
+    },
+    {
+      "day": 3,
+      "task": "Built focus timer functionality"
+    },
+    {
+      "day": 4,
+      "task": "Developed to-do list with Local Storage"
+    },
+    {
+      "day": 5,
+      "task": "Added quick links and UI improvements"
+    }
+  ]
+}
